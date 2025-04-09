@@ -45,16 +45,15 @@ useEffect(()=>{
     {isLoading?<Loader/>: <div className="bg-[#eee] min-h-screen pb-10">
       <div className={`container mx-auto xl:px-20 p-5`}>
    
-       <div className="flex justify-between py-6 ">
+       <div className="py-6 ">
            <h2 className='f_roboto text-2xl font-bold'>Wish List :</h2>
-            <button className={` text-red-500  hover:text-white hover:bg-red-500 transition-all  py-1 px-5 text-lg`}>DELETE CART</button>
        </div>
      
      <table className="w-full ">
      <tbody>
                    {wishlistItems.length === 0 ? (
                      <tr>
-                       <td colSpan="6" className="py-4 text-center">No items in the WislList.</td>
+                       <td colSpan="6" className="py-4 text-center">No items in the Wishlist</td>
                      </tr>
                    ) : (
                     wishlistItems.map((item) => (

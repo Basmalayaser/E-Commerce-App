@@ -26,7 +26,7 @@ export default function WishListProvider(props) {
         setwishListItems(response.data.data)
         return response
     }).catch((error)=>{
-        toast.error(error.message)
+        toast.error(error.response.data.message) 
         return error
     })}
 

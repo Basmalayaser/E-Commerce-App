@@ -49,7 +49,7 @@ async function getWishList() {
 
    async function loginForm(values){
     setIsLoading(true)
-       return await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values).then( (data)=>{
+       return await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values).then( async (data)=>{
         setIsLoading(false)
         setToken(data.data.token)
         localStorage.setItem("userToken",data.data.token)

@@ -33,11 +33,12 @@ export default function Navbarrr() {
           "data-[active=true]:text-orange-500",
         ],
       }}
+      className='shadow-md'
     >
       <NavbarContent>
         <NavbarBrand>
           <img src={brandicon} alt="brandicon" className='w-[50px]' />
-          <p className="font-bold f_roboto text-orange-500 text-xl ps-2">QuickCart</p>
+          <p className="font-bold  archivo-black-regular text-orange-500 text-xl ps-2">QuickCart</p>
         </NavbarBrand>
       </NavbarContent>
 

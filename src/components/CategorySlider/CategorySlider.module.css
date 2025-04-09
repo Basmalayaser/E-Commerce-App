@@ -42,7 +42,7 @@
      content: "_______";
      position: absolute;
      bottom: 10px;
-     transform: translate(85%);
+     transform: translate(100%);
      color: #f97316;
 
    }
@@ -51,7 +51,7 @@
     content: "_______";
     position: absolute;
     bottom: 10px;
-    transform: translate(-185%);
+    transform: translate(-200%);
     color: #f97316;
 
   }

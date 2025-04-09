@@ -49,7 +49,7 @@ export default function CategorySlider() {
    <div className="bg-[#eee] py-10">
     <div className="container lg:px-40 px-10 mx-auto">
       <div className={`${style.headind} pt-10 mb-10  text-3xl text-center font-semibold`}>
-        <h2>Categories</h2>
+        <h2 className='archivo-black-regular'>Categories</h2>
       </div>
       <Swiper
         modules={[Virtual, Navigation]}
@@ -59,7 +59,7 @@ export default function CategorySlider() {
         navigation={true}
         virtual
       >
-        {allCategories.map((category, index) => (
+        {allCategories?.map((category, index) => (
           <SwiperSlide key={category._id} virtualIndex={index}>
             <Link to={`/categoryDetails/${category._id}`}>
               <div

@@ -1,8 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { reach } from "yup";
-import {Badge} from "@nextui-org/badge";
+
 
 export let CartContext =createContext()
 
@@ -11,12 +10,13 @@ export default function CartContextProvider(props) {
     const[noOfCartItem,setNoOfCartItem]=useState(0)
     const[totalPrice,setTotalPrice]=useState(0)
     const[cartId,setcartId]=useState(null)
+    const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
 
   let headers={
     token:localStorage.getItem("userToken")
 }
 
- async function addProductToCart(productId){
+ async function addProductToCart(productId){ 
     return  await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`,{
         productId
     },{
@@ -28,8 +28,7 @@ export default function CartContextProvider(props) {
         setcartId(response.data.data._id)
         return response
     }).catch((error)=>{
-        toast.error(error.message)
-  
+        toast.error(error.response.data.message) 
         return error
     })
 
@@ -91,41 +90,62 @@ export default function CartContextProvider(props) {
 
 
   async function onlinePayment(shippingAddress){
-    return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173`,{
+    return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://github.com/Basmalayaser/E-Commerce-App`,{
         shippingAddress
     },{
         headers
     }).then((response)=>{
         setNoOfCartItem(response.data.numOfCartItems)
-        // setTotalPrice(response.data.data.totalCartPrice)
-        location.href=response.data.session.url
+        location.href =response.data.session.url;
          return response
     }).catch((error)=>{
-        console.log(error)
-        return error
-    })
-  }
-
-
-  async function cashPayment(shippingAddress){
-    return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,{
-        shippingAddress
-    },{
-        headers
-    }).then((response)=>{
-        setNoOfCartItem(response.data.numOfCartItems)
-        setTotalPrice(response.data.data.totalCartPrice)
-        window.location.href="http://localhost:5173/allorders"
-         return response
-    }).catch((error)=>{
-        console.log(error)
+      toast.error(error.response?.data?.message)
         return error
     })
   }
 
 
 
-  return <CartContext.Provider value={{addProductToCart ,getCartProduct,UpdateProductQuantity ,deleteItem,clearCart,noOfCartItem,totalPrice,setNoOfCartItem,onlinePayment,cashPayment}}>
+async function cashPayment(shippingAddress) {
+  try {
+    const response = await axios.post(
+      `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
+      { shippingAddress },
+      { headers }
+    );
+
+    setNoOfCartItem(response.data.numOfCartItems);
+    setTotalPrice(response.data.data.totalCartPrice);
+    setUserId(response.data.data.user);
+    console.log(response)
+    localStorage.setItem("userId", response.data.data.user);
+    window.location.href = "http://localhost:5173/allorders";
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
+
+  
+  async function getAllOrders() {
+    if (!userId) {
+      console.warn("User ID is missing, cannot fetch orders.");
+      return null;
+    }
+    try {
+      const response = await axios.get(
+        `https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`
+      );
+      
+      return response;
+    } 
+    catch (error) {
+      return error;
+    }
+  }
+
+
+  return <CartContext.Provider value={{addProductToCart ,getCartProduct,UpdateProductQuantity ,deleteItem,clearCart,noOfCartItem,totalPrice,setNoOfCartItem,onlinePayment,cashPayment,getAllOrders,cartId,userId}}>
             {props.children}
          </CartContext.Provider>
 }

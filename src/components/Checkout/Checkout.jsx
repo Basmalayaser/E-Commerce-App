@@ -25,11 +25,6 @@ export default function Checkout() {
       city:"",
     },
 
-    // validationSchema: Yup.object({
-    //   email: Yup.string().email('Invalid email address').required('Email is required'),
-    //   password:Yup.string().required('Password is required').matches(/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/,"Password is not valid"),
-    
-    // }),
     onSubmit: (values) => {
      payment(values)
 
@@ -37,11 +32,9 @@ export default function Checkout() {
 
     async function payment(shippingAddress){
       if(paymentType=="Online Payment"){
-       let response= await onlinePayment(shippingAddress)
-       console.log(response)
+        await onlinePayment(shippingAddress)
       }else{
-        let response= await cashPayment(shippingAddress)
-        console.log(response)
+        await cashPayment(shippingAddress)
       }
     
     }

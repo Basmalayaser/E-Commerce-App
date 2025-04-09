@@ -4,12 +4,13 @@ import CategorySlider from '../CategorySlider/CategorySlider'
 import GetProducts from '../GetProducts/GetProducts'
 import { CartContext } from '../../Context/Cartcontext'
 import { Helmet } from 'react-helmet'
+import MainHome from '../MainHome/MainHome'
 
 export default function Home() {
   
   return (
     <>
-      <MainSlider/>
+      <MainHome/>
       <CategorySlider/>
       <GetProducts/>
 

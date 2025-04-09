@@ -31,13 +31,13 @@ export default function Cart() {
     let response= await deleteItem(productId)
     setCartItems(response.data.data.products)
     setNoOfCartItem(response.data.numOfCartItems)
-    console.log(response)
+    
   }
 
   async function updateProduct(productId,count){
     let response= await UpdateProductQuantity(productId,count)
     setCartItems(response.data.data.products)
-    console.log(response)
+
   }
 
   async function clearUseCart(){

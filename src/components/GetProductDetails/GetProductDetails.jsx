@@ -29,7 +29,7 @@ export default function GetProductDetails() {
  async function GetDetails(){
     return await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`).then((data)=>{
       setLoading(false)
-      setDetails(data.data.data)
+      setDetails(data?.data.data)
       
     }).catch((error)=>{
       setLoading(false)
