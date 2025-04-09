@@ -105,13 +105,7 @@ if (wishListItems.includes(item.id)) {
               </div>
            </div>
       </div>
-      {/* <div className="insideCard cursor-pointer">
-              <div className="iconCard cursor-pointer">
-              <i className="fa-regular fa-heart text-xl"></i>
-              </div>
-        </div> */}
-
-
+ 
            <div className="insideCard">
               <div onClick={()=>{toggleWishlistItem(details)}} className="iconCard cursor-pointer">
               {wishListItems.includes(details.id) ? <i className="fa-solid fa-heart text-blue-500"></i>: <i className="fa-regular fa-heart text-xl text-blue-500"></i>}
