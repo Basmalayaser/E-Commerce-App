@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 
 export let CartContext =createContext()
@@ -15,6 +16,8 @@ export default function CartContextProvider(props) {
   let headers={
     token:localStorage.getItem("userToken")
 }
+
+const navigate = useNavigate();
 
  async function addProductToCart(productId){ 
     return  await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`,{
@@ -90,13 +93,13 @@ export default function CartContextProvider(props) {
 
 
   async function onlinePayment(shippingAddress){
-    return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://github.com/Basmalayaser/E-Commerce-App`,{
+    return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://github.com/Basmalayaser/E-Commerce-App?redirectTo=allorders`,{
         shippingAddress
     },{
         headers
     }).then((response)=>{
         setNoOfCartItem(response.data.numOfCartItems)
-        location.href =response.data.session.url;
+        window.location.href = response.data.session.url;
          return response
     }).catch((error)=>{
       toast.error(error.response?.data?.message)
@@ -118,7 +121,7 @@ async function cashPayment(shippingAddress) {
     setTotalPrice(response.data.data.totalCartPrice);
     setUserId(response.data.data.user);
     localStorage.setItem("userId", response.data.data.user);
-    window.location.href = "https://github.com/Basmalayaser/E-Commerce-App/allorders";
+    navigate('/allorders');
     return response;
   } catch (error) {
     return error;

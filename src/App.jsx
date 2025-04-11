@@ -1,5 +1,4 @@
-
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Layout from './components/Layout/Layout';
@@ -23,38 +22,76 @@ import Checkout from './components/Checkout/Checkout';
 import ForgetPass from './components/ForgetPass/ForgetPass';
 import VerifyResetCode from './components/VerifyResetCode/VerifyResetCode';
 import ResetPass from './components/ResetPass/ResetPass';
+import { useEffect } from 'react';
 
-function App() {
+// Create a QueryClient instance
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+      retryDelay: (attempt) => attempt * 1000,
+      staleTime: 5 * 60 * 1000,
+    },
+  },
+});
 
-  const queryClient = new QueryClient();
- 
-  let routers = createBrowserRouter([{
-    path: "", element: <Layout />, children: [
-      { index: true, element: <Home /> },
-      { path: "cart", element: <ProtectedRoutes><Cart /></ProtectedRoutes> },
-      { path: "wishList", element: <ProtectedRoutes><WishList /></ProtectedRoutes> },
-      { path: "productDetails/:id/:categoryId", element: <ProtectedRoutes><GetProductDetails /></ProtectedRoutes> },
-      { path: "categoryDetails/:id", element: <ProtectedRoutes><CategoryDetails /></ProtectedRoutes> },
-      { path: "allorders", element: <ProtectedRoutes><Allorders /></ProtectedRoutes> },
-      { path: "checkout/:type", element: <ProtectedRoutes><Checkout /></ProtectedRoutes> },
-      { path: "products", element: <Products /> },
-      { path: "categories", element: <Categories /> },
-      { path: "brands", element: <Brands /> },
-      { path: "login", element: <ProtectedAuth><Login /></ProtectedAuth> },
-      { path: "register", element: <ProtectedAuth><Register /></ProtectedAuth> },
-      { path: "forgetPass", element: <ProtectedAuth><ForgetPass /></ProtectedAuth> },
-      { path: "verifyResetCode", element: <ProtectedAuth><VerifyResetCode /></ProtectedAuth> },
-      { path: "resetPass", element: <ProtectedAuth><ResetPass /></ProtectedAuth> },
-      { path: "*", element: <NotFound /> },  // Catch-all for undefined routes
-    ]
-  }],
-  { basename: "/E-Commerce-App" } 
+// Define routes
+const routers = createBrowserRouter(
+  [
+    {
+      path: "",
+      element: <Layout />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: "cart", element: <ProtectedRoutes><Cart /></ProtectedRoutes> },
+        { path: "wishList", element: <ProtectedRoutes><WishList /></ProtectedRoutes> },
+        { path: "productDetails/:id/:categoryId", element: <ProtectedRoutes><GetProductDetails /></ProtectedRoutes> },
+        { path: "categoryDetails/:id", element: <ProtectedRoutes><CategoryDetails /></ProtectedRoutes> },
+        { path: "allorders", element: <ProtectedRoutes><Allorders /></ProtectedRoutes> },
+        { path: "checkout/:type", element: <ProtectedRoutes><Checkout /></ProtectedRoutes> },
+        { path: "products", element: <Products /> },
+        { path: "categories", element: <Categories /> },
+        { path: "brands", element: <Brands /> },
+        { path: "login", element: <ProtectedAuth><Login /></ProtectedAuth> },
+        { path: "register", element: <ProtectedAuth><Register /></ProtectedAuth> },
+        { path: "forgetPass", element: <ProtectedAuth><ForgetPass /></ProtectedAuth> },
+        { path: "verifyResetCode", element: <ProtectedAuth><VerifyResetCode /></ProtectedAuth> },
+        { path: "resetPass", element: <ProtectedAuth><ResetPass /></ProtectedAuth> },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+  ],
+  { basename: "/E-Commerce-App" }
 );
 
+// Wrapper component to handle redirects after payment
+function RedirectWrapper() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if the user is redirected back to the root URL after payment
+    if (location.pathname === "/E-Commerce-App" || location.pathname === "/E-Commerce-App/") {
+      // Check for a query parameter (optional, if you use query params for redirects)
+      const searchParams = new URLSearchParams(location.search);
+      const redirectTo = searchParams.get('redirectTo');
+      if (redirectTo) {
+        navigate(`/${redirectTo}`);
+      } else {
+        // Default redirect to /allorders after payment
+        navigate('/allorders');
+      }
+    }
+  }, [location, navigate]);
+
+  return <RouterProvider router={routers} />;
+}
+
+function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={routers} />
+        <RedirectWrapper />
         <Toaster />
       </QueryClientProvider>
     </>
