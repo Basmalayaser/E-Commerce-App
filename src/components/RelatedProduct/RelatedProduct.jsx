@@ -16,7 +16,7 @@ export default function RelatedProduct() {
   let {addProductToCart}=useContext(CartContext)
   let{ addProductToWishlist,wishListItems,removeProductFromWishlist,getAllProductFromWishlist} =useContext(WishListContext)
 
-  // Function to fetch related products
+
   async function getRelatedProduct() {
     try {
       const response = await axios.get('https://ecommerce.routemisr.com/api/v1/products');
@@ -37,7 +37,6 @@ export default function RelatedProduct() {
 
   async function addToCart(productId){
     let responce= await addProductToCart(productId)
-    console.log(responce)
  }
   
 
@@ -73,7 +72,7 @@ getWishList()
     <>
      <div className="pt-5">
     {errorMessage?<div className="text-center bg-red-400 text-white p-40">{errorMessage}</div>:""}
-    {isLoading?<Loader/>:relatedData.length==0?<div className="container mx-auto h-80 text-xl flex justify-center items-center text-orange-500">No products available now<i class="fa-regular fa-face-frown ps-3"></i></div>:
+    {isLoading?<Loader/>:relatedData.length==0?<div className="container mx-auto h-80 text-xl flex justify-center items-center text-orange-500">No products available now<i className="fa-regular fa-face-frown ps-3"></i></div>:
     <div className="gap-2 grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  ">
     {relatedData.map((product) => (
       <div key={product.id} className="wrapperCard">
@@ -104,7 +103,7 @@ getWishList()
         </div>
         <div className="insideCard cursor-pointer">
         <div onClick={()=>{toggleWishlistItem(product)}} className="iconCard cursor-pointer">
-              {wishListItems.includes(product.id) ? <i className="fa-solid fa-heart text-blue-500"></i>: <i className="fa-regular fa-heart text-xl text-blue-500"></i>}
+              {wishListItems?.includes(product.id) ? <i className="fa-solid fa-heart text-blue-500"></i>: <i className="fa-regular fa-heart text-xl text-blue-500"></i>}
               
               </div>
         </div>

@@ -26,7 +26,6 @@ export default function ResetPass(){
     
     }),
     onSubmit: (values) => {
-      console.log(values)
       resetNewPassword(values.email,values.newPassword)
     },})
 
@@ -38,11 +37,9 @@ export default function ResetPass(){
     }).then( (data)=>{
       setIsLoading(false)
       navigate("/login")
-        console.log(data)
      }).catch((error)=>{
       setIsLoading(false)
       setUserError("invalid Email or Password")
-      console.log(console.error)
      })
    }
 

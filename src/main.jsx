@@ -22,6 +22,7 @@ createRoot(document.getElementById('root')).render(
   <WishListProvider>
   <TokenContextProvider>
   <ProductContextProvider>
+  <QueryClientProvider client={queryClient}>
   <CategoryContextProvider>
   <QueryClientProvider client={queryClient}>
   <StrictMode>
@@ -31,6 +32,7 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>
   </QueryClientProvider>
   </CategoryContextProvider>
+  </QueryClientProvider>
   </ProductContextProvider>
   </TokenContextProvider>
   </WishListProvider>

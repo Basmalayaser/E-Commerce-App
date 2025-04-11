@@ -50,7 +50,6 @@ export default function Brands() {
       const filteredRelated = related.filter(product => product.brand._id === id);
       setRelatedData(filteredRelated);
       setLoading(false)
-      console.log(filteredRelated);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -66,7 +65,6 @@ export default function Brands() {
   
   async function addToCart(productId){
     let responce= await addProductToCart(productId)
-    console.log(responce)
  }
   
 

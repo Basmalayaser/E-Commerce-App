@@ -117,9 +117,8 @@ async function cashPayment(shippingAddress) {
     setNoOfCartItem(response.data.numOfCartItems);
     setTotalPrice(response.data.data.totalCartPrice);
     setUserId(response.data.data.user);
-    console.log(response)
     localStorage.setItem("userId", response.data.data.user);
-    window.location.href = "http://localhost:5173/allorders";
+    window.location.href = "https://github.com/Basmalayaser/E-Commerce-App/allorders";
     return response;
   } catch (error) {
     return error;
@@ -129,7 +128,6 @@ async function cashPayment(shippingAddress) {
   
   async function getAllOrders() {
     if (!userId) {
-      console.warn("User ID is missing, cannot fetch orders.");
       return null;
     }
     try {

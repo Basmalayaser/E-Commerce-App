@@ -19,7 +19,6 @@ export default function VerifyResetCode() {
     },
 
     onSubmit: (values) => {
-      console.log(values.resetCode)
       VerifyCode(values.resetCode)
     },})
    async function VerifyCode(resetCode){
@@ -29,7 +28,6 @@ export default function VerifyResetCode() {
     }).then( (data)=>{
       setIsLoading(false)
       navigate("/resetPass")
-        console.log(data)
      }).catch((error)=>{
       setIsLoading(false)
       setUserError("invalid code")

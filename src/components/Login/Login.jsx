@@ -39,12 +39,10 @@ export default function Login() {
     
 async function getCart() {
  let response= await getCartProduct();
-  console.log(response,'cartlogin')
 }
 
 async function getWishList() {
   let response =await getAllProductFromWishlist();
-   console.log(response,"WishLogin")
 }
 
    async function loginForm(values){

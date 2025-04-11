@@ -16,7 +16,6 @@ export default function CategoryDetails() {
   const [filterdData,setRelatedData]=useState([])
   const [isloading,setisloading]=useState(true)
 
-  console.log(allCategories)
 
 
   useEffect(()=>{
