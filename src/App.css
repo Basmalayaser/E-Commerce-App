@@ -93,3 +93,7 @@ input:focus-visible{
 .footer-subTitle {
   @apply mb-7 text-xl font-bold archivo-black-regular;
 }
+
+.nav-hover{
+  @apply hover:text-orange-500 transition-colors duration-200
+}

@@ -37,34 +37,36 @@ export default function Navbarrr() {
     >
       <NavbarContent>
         <NavbarBrand>
-          <img src={brandicon} alt="brandicon" className='w-[50px]' />
-          <p className="font-bold  archivo-black-regular text-orange-500 text-xl ps-2">QuickCart</p>
+        <Link to="/" className='flex items-center'>
+          <img src={brandicon} alt="brandicon" className='w-[50px] ' />
+          <p className="font-bold  archivo-black-regular text-orange-500 text-xl ps-2 cursor-pointer">QuickCart</p>
+        </Link>
         </NavbarBrand>
       </NavbarContent>
 
       {token && (
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem isActive={location.pathname === '/'} >
-            <Link to="/">Home</Link>
+            <Link to="/" className='nav-hover'>Home</Link>
           </NavbarItem>
           <NavbarItem isActive={location.pathname === '/cart'}>
-            <Link to="cart">
+            <Link to="cart" className='nav-hover'>
               <Badge content={noOfCartItem} color="primary"><span className='p-[3px]'>Cart</span></Badge>
             </Link>
           </NavbarItem>
           <NavbarItem isActive={location.pathname === '/wishList'}>
-            <Link to="wishList">
+            <Link to="wishList" className='nav-hover'>
               <Badge content={noOfWishList} color="primary"><span className='p-[3px]'>WishList</span></Badge>
             </Link>
           </NavbarItem>
           <NavbarItem isActive={location.pathname === '/products'}>
-            <Link to="products">Products</Link>
+            <Link to="products" className='nav-hover'>Products</Link>
           </NavbarItem>
           <NavbarItem isActive={location.pathname === '/categories'}>
-            <Link to="categories">Categories</Link>
+            <Link to="categories" className='nav-hover'>Categories</Link>
           </NavbarItem>
           <NavbarItem isActive={location.pathname === '/brands'}>
-            <Link to="brands">Brands</Link>
+            <Link to="brands" className='nav-hover'>Brands</Link>
           </NavbarItem>
         </NavbarContent>
       )}
@@ -73,7 +75,7 @@ export default function Navbarrr() {
         {token ? (
           <>
             <NavbarItem className="flex">
-              <a href='' onClick={handleLogOut}>LogOut</a>
+              <a href='' onClick={handleLogOut} className='nav-hover'>LogOut</a>
             </NavbarItem>
             <NavbarItem>
               <NavbarMenuToggle
@@ -85,10 +87,10 @@ export default function Navbarrr() {
         ) : (
           <>
             <NavbarItem className="flex">
-              <Link to="register">SignUp</Link>
+              <Link to="register" className='nav-hover'>SignUp</Link>
             </NavbarItem>
             <NavbarItem className="flex">
-              <Link to="login">Login</Link>
+              <Link to="login" className='nav-hover'>Login</Link>
             </NavbarItem>
           </>
         )}
@@ -96,32 +98,31 @@ export default function Navbarrr() {
 
       <NavbarMenu>
         <NavbarMenuItem>
-          <Link to="/">Home</Link>
+          <Link to="/" className='nav-hover'>Home</Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link to="cart">
+          <Link to="cart" className='nav-hover'>
             <Badge content={noOfCartItem} color="primary"><span className='p-[3px]'>Cart</span></Badge>
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link to="wishList">
+          <Link to="wishList"className='nav-hover'>
             <Badge content={noOfWishList} color="primary"><span className='p-[3px]'>WishList</span></Badge>
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link to="products">Products</Link>
+          <Link to="products" className='nav-hover'>Products</Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link to="categories">Categories</Link>
+          <Link to="categories" className='nav-hover'>Categories</Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link to="brands">Brands</Link>
+          <Link to="brands" className='nav-hover'>Brands</Link>
         </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   )
 }
-
 
 
 
