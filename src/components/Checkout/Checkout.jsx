@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import style from './Checkout.module.css'
 import {Input ,Card, CardBody, Snippet} from "@nextui-org/react";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -13,6 +13,7 @@ export default function Checkout() {
  const [paymentType,setpaymentType]=useState(null)
  const {onlinePayment,cashPayment}=useContext(CartContext)
  const {type}=useParams()
+ const navigate =useNavigate()
 
   useEffect(()=>{
     setpaymentType(type)
@@ -35,6 +36,7 @@ export default function Checkout() {
         await onlinePayment(shippingAddress)
       }else{
         await cashPayment(shippingAddress)
+        navigate('/allorders');
       }
     
     }

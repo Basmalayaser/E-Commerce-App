@@ -3,16 +3,15 @@ import { CartContext } from "./../../Context/Cartcontext";
 import Loader from "../Loader/Loader";
 
 const OrdersComponent = () => {
-  const { getAllOrders, userId } = useContext(CartContext);
+  const { getAllOrders } = useContext(CartContext);
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
 
  async function getOrdersList(){
      let response = await getAllOrders()
-     setLoading(false)
      setCartItems(response.data)
-     console.log(response.data)
+     setLoading(false) 
   }
 
 
@@ -20,7 +19,6 @@ const OrdersComponent = () => {
      getOrdersList()
   },[])
  return(<>
- 
   {isLoading?<Loader/>: <div className="bg-[#eee] min-h-screen">
     <div className={`container mx-auto xl:px-20 p-5`}>
  

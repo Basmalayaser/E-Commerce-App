@@ -24,7 +24,6 @@ useEffect(()=>{
  async function getWishlist() {
     let response=  await  getAllProductFromWishlist()
     setWishlistItems(response.data.data)
-    console.log(response)
     setisLoading(false)
  }
 
@@ -35,9 +34,7 @@ useEffect(()=>{
   }
 
   async function addToCart(productId){
-    await addProductToCart(productId)
-    setWishlistItems(response.data.data)
-   
+     await addProductToCart(productId)
  }
   
   return (

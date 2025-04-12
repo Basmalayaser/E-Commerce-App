@@ -9,7 +9,6 @@ import { CartContext } from '../../Context/Cartcontext';
 import { WishListContext } from '../../Context/WishListContext';
 import { Input } from '@nextui-org/react';
 
-
 export default function GetProducts() {
   const { addProductToCart } = useContext(CartContext);
   const { addProductToWishlist, wishListItems, removeProductFromWishlist, getAllProductFromWishlist } = useContext(WishListContext);
