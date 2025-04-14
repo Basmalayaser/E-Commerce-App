@@ -3,9 +3,6 @@ import style from './Checkout.module.css'
 import {Input ,Card, CardBody, Snippet} from "@nextui-org/react";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
-import { TokenContext } from '../../Context/TokenContext';
 import { useContext } from 'react';
 import { CartContext } from '../../Context/Cartcontext';
 
@@ -33,7 +30,8 @@ export default function Checkout() {
 
     async function payment(shippingAddress){
       if(paymentType=="Online Payment"){
-        await onlinePayment(shippingAddress)
+       let response= await onlinePayment(shippingAddress)
+        window.location.href = response.data.session.url;
       }else{
         await cashPayment(shippingAddress)
         navigate('/allorders');
@@ -53,7 +51,6 @@ export default function Checkout() {
         <p className='text-gray-500 pb-5'>Enter your data to complete payment process</p>
         </div>
        <div className="text-center">
-       {/* {userError? <Snippet color="danger" hideSymbol="false" hideCopyButton="false" className="mb-4 w-full">{userError}</Snippet>:null} */}
 
        <div className="mb-4">
         <Input name='details' id='details' type="text" label="Details" radius="full" className='h-11 w-4/5 mx-auto' onChange={formik.handleChange} value={formik.values.details} onBlur={formik.handleBlur}/>

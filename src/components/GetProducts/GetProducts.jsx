@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './GetProducts.module.css';
 import axios from 'axios';
 import Loader from '../Loader/Loader';
@@ -11,7 +11,7 @@ import { Input } from '@nextui-org/react';
 
 export default function GetProducts() {
   const { addProductToCart } = useContext(CartContext);
-  const { addProductToWishlist, wishListItems, removeProductFromWishlist, getAllProductFromWishlist } = useContext(WishListContext);
+  const { addProductToWishlist, wishListItemsIDs, removeProductFromWishlist } = useContext(WishListContext);
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -24,26 +24,20 @@ export default function GetProducts() {
     return axios.get('https://ecommerce.routemisr.com/api/v1/products');
   }
 
-  async function getWishList() {
-    await getAllProductFromWishlist();
-  }
-
   async function addToCart(productId) {
     await addProductToCart(productId);
   }
 
   async function addToWish(productId) {
     await addProductToWishlist(productId);
-    await getWishList();
   }
 
   async function removeFromWish(productId) {
     await removeProductFromWishlist(productId);
-    await getWishList();
   }
 
   function toggleWishlistItem(item) {
-    if (wishListItems.includes(item.id)) {
+    if (wishListItemsIDs.includes(item.id)) {
       return removeFromWish(item.id);
     } else {
       return addToWish(item.id);
@@ -60,11 +54,11 @@ export default function GetProducts() {
       {isLoading ? <Loader /> :
         <>
           <div className="mb-8">
-            <Input size='sm' type="text" label="Search products..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+            <Input size='sm' type="text" label="Search products..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
           </div>
 
-          <div className="gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
-            {filteredProducts.map((product) => (
+          <div className="gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            {filteredProducts?.map((product) => (
               <div key={product.id} className="wrapperCard">
                 <div className="">
                   <Link to={`/productDetails/${product.id}/${product.category._id}`}>
@@ -91,9 +85,10 @@ export default function GetProducts() {
                   </div>
                 </div>
                 <div className="insideCard">
-                  <div onClick={() => { toggleWishlistItem(product) }} className="iconCard cursor-pointer">
-                  {Array.isArray(wishListItems) && wishListItems.includes(product.id) ? <i className="fa-solid fa-heart text-blue-500"></i> : <i className="fa-regular fa-heart text-xl text-blue-500"></i>}
-
+                  <div onClick={() => toggleWishlistItem(product)} className="iconCard cursor-pointer">
+                    {wishListItemsIDs?.includes(product.id) ?
+                      <i className="fa-solid fa-heart text-blue-500"></i> :
+                      <i className="fa-regular fa-heart text-xl text-blue-500"></i>}
                   </div>
                 </div>
               </div>

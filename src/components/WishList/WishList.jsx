@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect, useState } from 'react'
 import style from './WishList.module.css'
 import { WishListContext } from '../../Context/WishListContext'
@@ -7,30 +8,25 @@ import { Helmet } from 'react-helmet'
 
 export default function WishList() {
 
-  const[wishlistItems,setWishlistItems]=useState([])
   const[isLoading,setisLoading]=useState(true) 
 
-  let{ removeProductFromWishlist,getAllProductFromWishlist} =useContext(WishListContext)
+  let{ removeProductFromWishlist,getAllProductFromWishlist,wishListItems} =useContext(WishListContext)
   let {addProductToCart}=useContext(CartContext)
 
  useEffect(()=>{
   getWishlist()
 },[])
 
-useEffect(()=>{
-  getWishlist()
-},[wishlistItems])
-
  async function getWishlist() {
-    let response=  await  getAllProductFromWishlist()
-    setWishlistItems(response.data.data)
-    setisLoading(false)
+   await  getAllProductFromWishlist()
+   setisLoading(false)
  }
 
 
    async function deleteFromWishList(id){
-     let response= await removeProductFromWishlist(id)
-     setWishlistItems(response.data.data)
+     await removeProductFromWishlist(id)
+     await getAllProductFromWishlist()
+     
   }
 
   async function addToCart(productId){
@@ -48,12 +44,12 @@ useEffect(()=>{
      
      <table className="w-full ">
      <tbody>
-                   {wishlistItems.length === 0 ? (
+                   {wishListItems.length === 0 ? (
                      <tr>
                        <td colSpan="6" className="py-4 text-center">No items in the Wishlist</td>
                      </tr>
                    ) : (
-                    wishlistItems.map((item) => (
+                    wishListItems.map((item) => (
                        <tr key={item.id} className="bg-white py-5 ">
                          <td className="py-2 ps-3">
                            <img className=" mx-auto" src={item.imageCover} width="100" alt="Product" />

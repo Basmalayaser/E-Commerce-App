@@ -42,7 +42,7 @@ async function getCart() {
 }
 
 async function getWishList() {
-  let response =await getAllProductFromWishlist();
+  await getAllProductFromWishlist();
 }
 
    async function loginForm(values){
@@ -51,10 +51,8 @@ async function getWishList() {
         setIsLoading(false)
         setToken(data.data.token)
         localStorage.setItem("userToken",data.data.token)
-        // navigate("/")
         getWishList()
         getCart()
-        setwishListItems(localStorage.getItem("wishListItems"))
         navigate("/")
 
        }).catch((error)=>{

@@ -17,6 +17,12 @@ export default function CartContextProvider(props) {
     token:localStorage.getItem("userToken")
 }
 
+useEffect(() => {
+  if (localStorage.getItem("userToken")) {
+    getCartProduct();
+  }
+}, []);
+
 
 
  async function addProductToCart(productId){ 
@@ -99,7 +105,6 @@ export default function CartContextProvider(props) {
         headers
     }).then((response)=>{
         setNoOfCartItem(response.data.numOfCartItems)
-        window.location.href = response.data.session.url;
          return response
     }).catch((error)=>{
       toast.error(error.response?.data?.message)

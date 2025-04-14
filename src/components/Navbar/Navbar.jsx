@@ -20,7 +20,8 @@ export default function Navbarrr() {
   let location = useLocation(); // Hook to get the current location
 
 
-  function handleLogOut() {
+  function handleLogOut(e) {
+    e.preventDefault(); // Prevent default link behavior
     setToken(null);
     localStorage.removeItem("userToken");
     navigate("/login");
@@ -75,7 +76,7 @@ export default function Navbarrr() {
         {token ? (
           <>
             <NavbarItem className="flex">
-              <a href='' onClick={handleLogOut} className='nav-hover'>LogOut</a>
+            <a href="#" onClick={handleLogOut} className="nav-hover">LogOut</a>
             </NavbarItem>
             <NavbarItem>
               <NavbarMenuToggle
