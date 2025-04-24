@@ -30,8 +30,8 @@ export default function Checkout() {
 
     async function payment(shippingAddress){
       if(paymentType=="Online Payment"){
-       let response= await onlinePayment(shippingAddress)
-        window.location.href = response.data.session.url;
+      let response= await onlinePayment(shippingAddress)
+       window.location.href = response.data.session.url;
       }else{
         await cashPayment(shippingAddress)
         navigate('/allorders');

@@ -13,11 +13,11 @@ import { WishListContext } from '../../Context/WishListContext';
 export default function Login() {
 
   const [userError,setUserError]=useState(null)
-  const {token,setToken}=useContext(TokenContext)
+  const {setToken}=useContext(TokenContext)
   const [IsLoading,setIsLoading]=useState(false)
   
-  const { noOfCartItem,getCartProduct} = useContext(CartContext);
-  const { setNoOfwishList,setwishListItems,noOfWishList,getAllProductFromWishlist} = useContext(WishListContext);
+  const { getCartProduct} = useContext(CartContext);
+  const { getAllProductFromWishlist} = useContext(WishListContext);
 
   let navigate =useNavigate()
 
@@ -38,7 +38,7 @@ export default function Login() {
 
     
 async function getCart() {
- let response= await getCartProduct();
+ await getCartProduct();
 }
 
 async function getWishList() {
@@ -57,7 +57,7 @@ async function getWishList() {
 
        }).catch((error)=>{
         setIsLoading(false)
-        setUserError(error.message)
+        setUserError(error.response.data.message)
        })
     }
 
@@ -66,42 +66,50 @@ async function getWishList() {
   return (
     <>
      <div className={` flex justify-center items-center h-screen bg_Image`}>
-     <Card  className='px-10 py-5 min-w-[30%] mt-10'>
+     <Card  className='w-5/6 sm:w-2/3 lg:w-1/3 py-10'>
      <CardBody>
 
      <form onSubmit={formik.handleSubmit}>
         <div className="text-center">
-        <h2 className='text-4xl font-bold text-orange-500 pb-2 f_roboto'>Welcome back!</h2>
-        <p className='text-gray-500 pb-5'>Login to your account</p>
+        <h2 className='text-4xl  font-bold text-orange-500 pb-10 f_roboto'>Login</h2>
+        
         </div>
-       <div className="text-center">
-       {userError? <Snippet color="danger" hideSymbol="false" hideCopyButton="false" className="mb-4 w-full">{userError}</Snippet>:null}
+       <div className="w-4/5 mx-auto ">
+       {userError? <Snippet color="danger" hideSymbol="false" hideCopyButton="false" className="mb-4 ">{userError}</Snippet>:null}
 
        <div className="mb-4">
-        <Input name='email' id='email' type="email" label="Email" radius="full" className='h-11 w-4/5 mx-auto' onChange={formik.handleChange} value={formik.values.email} onBlur={formik.handleBlur}/>
+        <Input name='email' id='email' type="email" label="Email" radius="full" className='h-11' onChange={formik.handleChange} value={formik.values.email} onBlur={formik.handleBlur}/>
         {formik.touched.email && formik.errors.email ? (
          <div className='text-red-500'>{formik.errors.email}</div>
        ) : null}
         </div>
 
-        <div className="mb-4">
-        <Input name='password' id='password' type="password" label="Password" radius="full"  className='h-11 w-4/5 mx-auto' onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur}/>
+        <div className="mb-8">
+        <Input name='password' id='password' type="password" label="Password" radius="full"  className='h-11' onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur}/>
         {formik.touched.password && formik.errors.password ? (
          <div className='text-red-500'>{formik.errors.password}</div>
        ) : null}
         </div>
-       </div>
 
+        <button type='submit' disabled={!(formik.isValid && formik.dirty)} className='px-14 py-3 w-full bg-orange-500 text-white rounded-full f_roboto '>
+          {IsLoading?<Spinner  color="praimery"/>:"LogIn"}
+        </button>
 
-        <div className="flex justify-between items-center">
-          <div className="hover:text-orange-500 transition-all">
+        <div className=' text-gray-500 text-center'>
+          <div className="pt-7 pb-2">
           <Link to="/forgetPass" >
-             forget your password ?
+             Forget <span className='text-orange-500'>Username/Password ?</span>
           </Link>
           </div>
-          <button type='submit' disabled={!(formik.isValid && formik.dirty)} className='px-14 py-3 bg-orange-500 text-white rounded-full f_roboto '>
-          {IsLoading?<Spinner  color="praimery"/>:"LogIn"}</button>
-        </div>
+          <div >
+          <Link to="/register" >
+             Don't have an account ?<span className='text-orange-500'>Sign up</span>
+          </Link>
+          </div>
+          </div>
+
+       </div>
+
       </form>
 
       </CardBody>

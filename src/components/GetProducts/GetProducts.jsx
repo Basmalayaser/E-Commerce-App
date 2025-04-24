@@ -37,7 +37,7 @@ export default function GetProducts() {
   }
 
   function toggleWishlistItem(item) {
-    if (wishListItemsIDs.includes(item.id)) {
+    if (wishListItemsIDs?.includes(item.id)) {
       return removeFromWish(item.id);
     } else {
       return addToWish(item.id);

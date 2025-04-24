@@ -51,30 +51,30 @@ export default function Register() {
   return (
     <>
      <div className={` flex justify-center items-center h-screen bg_Image`}>
-     <Card  className='p-5 min-w-[30%] mt-10'>
+     <Card  className='w-5/6 sm:w-2/3 lg:w-1/3 py-10'>
      <CardBody>
 
-     <form className="text-center" onSubmit={formik.handleSubmit}>
+     <form  onSubmit={formik.handleSubmit}>
        
-        <h2 className='text-3xl font-bold text-orange-500 pb-5 f_roboto'>Create your account</h2>
-        <p> </p>
+        <h2 className='text-3xl font-bold text-orange-500  f_roboto text-center pb-10'>Create your account</h2>
+       <div className="w-4/5 mx-auto">
         {userError? <Snippet color="danger" hideSymbol="false" hideCopyButton="false" className="mb-4 w-full">{userError}</Snippet>:null}
         <div className="mb-4">
-        <Input name='name' id='name' type="text" label="Name" radius="full" className='h-11 w-4/5 mx-auto ' onChange={formik.handleChange} value={formik.values.name} onBlur={formik.handleBlur}/>
+        <Input name='name' id='name' type="text" label="Name" radius="full" className='h-11  ' onChange={formik.handleChange} value={formik.values.name} onBlur={formik.handleBlur}/>
         {formik.touched.name && formik.errors.name ? (
          <div className='text-red-500'>{formik.errors.name}</div>
         ) : null}
         </div>
 
         <div className="mb-4">
-        <Input name='email' id='email' type="email" label="Email" radius="full" className='h-11 w-4/5 mx-auto' onChange={formik.handleChange} value={formik.values.email} onBlur={formik.handleBlur}/>
+        <Input name='email' id='email' type="email" label="Email" radius="full" className='h-11 ' onChange={formik.handleChange} value={formik.values.email} onBlur={formik.handleBlur}/>
         {formik.touched.email && formik.errors.email ? (
          <div className='text-red-500'>{formik.errors.email}</div>
        ) : null}
         </div>
 
         <div className="mb-4">
-        <Input name='phone' id='phone' type="tel" label="Phone" radius="full" className='h-11 w-4/5 mx-auto'onChange={formik.handleChange} value={formik.values.phone} onBlur={formik.handleBlur}/>
+        <Input name='phone' id='phone' type="tel" label="Phone" radius="full" className='h-11 'onChange={formik.handleChange} value={formik.values.phone} onBlur={formik.handleBlur}/>
         {formik.touched.phone && formik.errors.phone
          ? (
          <div className='text-red-500'>{formik.errors.phone}</div>
@@ -82,21 +82,23 @@ export default function Register() {
         </div>
 
         <div className="mb-4">
-        <Input name='password' id='password' type="password" label="Password" radius="full"  className='h-11 w-4/5 mx-auto' onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur}/>
+        <Input name='password' id='password' type="password" label="Password" radius="full"  className='h-11 ' onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur}/>
         {formik.touched.password && formik.errors.password ? (
          <div className='text-red-500'>{formik.errors.password}</div>
        ) : null}
         </div>
 
         <div className="mb-4">
-        <Input name='rePassword' id='rePassword' type="password" label="RePassword" radius="full" className='h-11 w-4/5 mx-auto'onChange={formik.handleChange} value={formik.values.rePassword} onBlur={formik.handleBlur} />
+        <Input name='rePassword' id='rePassword' type="password" label="RePassword" radius="full" className='h-11 'onChange={formik.handleChange} value={formik.values.rePassword} onBlur={formik.handleBlur} />
         {formik.touched.rePassword && formik.errors.rePassword ? (
          <div className='text-red-500'>{formik.errors.rePassword}</div>
        ) : null}
         </div>
 
-       <button type="submit" disabled={!(formik.isValid && formik.dirty)} className='px-14 py-3 bg-orange-500 text-white rounded-full f_roboto'>
-       {IsLoading?<Spinner  color="praimery"/>:"SignUp"}</button>
+       <button type="submit" disabled={!(formik.isValid && formik.dirty)} className='px-14 py-3 bg-orange-500 text-white rounded-full f_roboto w-full my-5'>
+       {IsLoading?<Spinner  color="praimery"/>:"SignUp"}
+       </button>
+       </div>
 
       </form>
 

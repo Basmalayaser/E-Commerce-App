@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { CartContext } from "./../../Context/Cartcontext";
 import Loader from "../Loader/Loader";
+import { useNavigate } from "react-router-dom";
 
 const OrdersComponent = () => {
-  const { getAllOrders } = useContext(CartContext);
-  const [cartItems, setCartItems] = useState([]);
+  const { getAllOrders ,allOrder} = useContext(CartContext);
+
   const [isLoading, setLoading] = useState(true);
+   const navigate =useNavigate()
 
 
  async function getOrdersList(){
-     let response = await getAllOrders()
-     setCartItems(response.data)
+     await getAllOrders()
      setLoading(false) 
   }
 
@@ -40,12 +41,10 @@ const OrdersComponent = () => {
      </tr>
    </thead>
    <tbody>
-                 {cartItems.length === 0 ? (
-                   <tr>
-                     <td colSpan="6" className="py-4 text-center">No items in the cart.</td>
-                   </tr>
+                 {allOrder.length === 0 ? (
+                  navigate('/')
                  ) : (
-                   cartItems.map((item) => (
+                  allOrder.map((item) => (
                      <tr key={item.id} className="bg-white py-5 text-center">
                        <td>
                          <p > {item.id} </p>

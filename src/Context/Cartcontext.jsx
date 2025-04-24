@@ -11,7 +11,8 @@ export default function CartContextProvider(props) {
     const[noOfCartItem,setNoOfCartItem]=useState(0)
     const[totalPrice,setTotalPrice]=useState(0)
     const[cartId,setcartId]=useState(null)
-    const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
+    const [userId, setUserId] = useState(null);
+    const[allOrder,setallOrder]=useState([])
 
   let headers={
     token:localStorage.getItem("userToken")
@@ -96,8 +97,7 @@ useEffect(() => {
         return error
     })
   }
-
-
+ 
   async function onlinePayment(shippingAddress){
     return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://github.com/Basmalayaser/E-Commerce-App`,{
         shippingAddress
@@ -105,7 +105,8 @@ useEffect(() => {
         headers
     }).then((response)=>{
         setNoOfCartItem(response.data.numOfCartItems)
-         return response
+        console.log(response)
+        return response;
     }).catch((error)=>{
       toast.error(error.response?.data?.message)
         return error
@@ -125,7 +126,6 @@ async function cashPayment(shippingAddress) {
     setNoOfCartItem(response.data.numOfCartItems);
     setTotalPrice(response.data.data.totalCartPrice);
     setUserId(response.data.data.user);
-    localStorage.setItem("userId", response.data.data.user);
     return response;
   } catch (error) {
     return error;
@@ -141,8 +141,8 @@ async function cashPayment(shippingAddress) {
       const response = await axios.get(
         `https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`
       );
-      
-      return response;
+      setallOrder(response.data)
+      return;
     } 
     catch (error) {
       return error;
@@ -150,7 +150,7 @@ async function cashPayment(shippingAddress) {
   }
 
 
-  return <CartContext.Provider value={{addProductToCart ,getCartProduct,UpdateProductQuantity ,deleteItem,clearCart,noOfCartItem,totalPrice,setNoOfCartItem,onlinePayment,cashPayment,getAllOrders,cartId,userId}}>
+  return <CartContext.Provider value={{addProductToCart ,getCartProduct,UpdateProductQuantity ,deleteItem,clearCart,noOfCartItem,totalPrice,setNoOfCartItem,onlinePayment,cashPayment,getAllOrders,cartId,userId,allOrder}}>
             {props.children}
          </CartContext.Provider>
 }

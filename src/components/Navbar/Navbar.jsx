@@ -24,7 +24,7 @@ export default function Navbarrr() {
     e.preventDefault(); // Prevent default link behavior
     setToken(null);
     localStorage.removeItem("userToken");
-    navigate("/login");
+    navigate("/login", { replace: true }); // Replace history entry
   }
 
   return (
